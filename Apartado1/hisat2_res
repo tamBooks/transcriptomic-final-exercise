@@ -1,0 +1,35 @@
+hisat2 -x input/Homo_sap_index -1 input/SRR479052.chr21_1.fastq -2 input/SRR479052.chr21_2.fastq -S input/SRR479052.chr21_alignments.sam
+15340 reads; of these:
+  15340 (100.00%) were paired; of these:
+    8264 (53.87%) aligned concordantly 0 times
+    5777 (37.66%) aligned concordantly exactly 1 time
+    1299 (8.47%) aligned concordantly >1 times
+    ----
+    8264 pairs aligned concordantly 0 times; of these:
+      1619 (19.59%) aligned discordantly 1 time
+    ----
+    6645 pairs aligned 0 times concordantly or discordantly; of these:
+      13290 mates make up the pairs; of these:
+        6563 (49.38%) aligned 0 times
+        4711 (35.45%) aligned exactly 1 time
+        2016 (15.17%) aligned >1 times
+78.61% overall alignment rate
+
+
+hisat2 -x input/Homo_sap_index -1 input/SRR479054.chr21_1.fastq -2 input/SRR479054.chr21_2.fastq -S input/SRR479054.chr21_alignments.sam
+9746 reads; of these:
+  9746 (100.00%) were paired; of these:
+    4883 (50.10%) aligned concordantly 0 times
+    3878 (39.79%) aligned concordantly exactly 1 time
+    985 (10.11%) aligned concordantly >1 times
+    ----
+    4883 pairs aligned concordantly 0 times; of these:
+      850 (17.41%) aligned discordantly 1 time
+    ----
+    4033 pairs aligned 0 times concordantly or discordantly; of these:
+      8066 mates make up the pairs; of these:
+        4007 (49.68%) aligned 0 times
+        3034 (37.61%) aligned exactly 1 time
+        1025 (12.71%) aligned >1 times
+79.44% overall alignment rate
+

@@ -1,0 +1,43 @@
+NAME	SYMBOL	TITLE	RANK IN GENE LIST	RANK METRIC SCORE	RUNNING ES	CORE ENRICHMENT	
+row_0	NCSTN	nicastrin [Source:HGNC Symbol;Acc:HGNC:17091]	343	0.10313903540372849	0.09129132	Yes	
+row_1	RBPJ	recombination signal binding protein for immunoglobulin kappa J region [Source:HGNC Symbol;Acc:HGNC:5724]	1401	0.0495821088552475	0.09282555	Yes	
+row_2	CTNNB1	catenin beta 1 [Source:HGNC Symbol;Acc:HGNC:2514]	1733	0.043233588337898254	0.122204594	Yes	
+row_3	CUL1	cullin 1 [Source:HGNC Symbol;Acc:HGNC:2551]	1912	0.04024738818407059	0.15573257	Yes	
+row_4	ADAM17	ADAM metallopeptidase domain 17 [Source:HGNC Symbol;Acc:HGNC:195]	2067	0.038105059415102005	0.18816547	Yes	
+row_5	HDAC11	histone deacetylase 11 [Source:HGNC Symbol;Acc:HGNC:19086]	2613	0.03183306008577347	0.19549415	Yes	
+row_6	TP53	tumor protein p53 [Source:HGNC Symbol;Acc:HGNC:11998]	2810	0.029960326850414276	0.21743809	Yes	
+row_7	HDAC2	histone deacetylase 2 [Source:HGNC Symbol;Acc:HGNC:4853]	3195	0.026608984917402267	0.22696136	Yes	
+row_8	MAML1	mastermind like transcriptional coactivator 1 [Source:HGNC Symbol;Acc:HGNC:13632]	3785	0.02171308919787407	0.22164592	Yes	
+row_9	SKP2	S-phase kinase associated protein 2 [Source:HGNC Symbol;Acc:HGNC:10901]	3833	0.021328991279006004	0.24166098	Yes	
+row_10	DVL2	dishevelled segment polarity protein 2 [Source:HGNC Symbol;Acc:HGNC:3086]	4120	0.019199905917048454	0.248109	Yes	
+row_11	PSEN2	presenilin 2 [Source:HGNC Symbol;Acc:HGNC:9509]	4275	0.01816844753921032	0.25974783	Yes	
+row_12	CSNK1E	casein kinase 1 epsilon [Source:HGNC Symbol;Acc:HGNC:2453]	4297	0.018010228872299194	0.2775357	Yes	
+row_13	HDAC5	histone deacetylase 5 [Source:HGNC Symbol;Acc:HGNC:14068]	4735	0.015202021226286888	0.27264526	Yes	
+row_14	NCOR2	nuclear receptor corepressor 2 [Source:HGNC Symbol;Acc:HGNC:7673]	4872	0.014371140860021114	0.281178	Yes	
+row_15	PTCH1	patched 1 [Source:HGNC Symbol;Acc:HGNC:9585]	5226	0.012261727824807167	0.27720866	No	
+row_16	TCF7	transcription factor 7 [Source:HGNC Symbol;Acc:HGNC:11639]	6004	0.007951878011226654	0.24861495	No	
+row_17	FZD1	frizzled class receptor 1 [Source:HGNC Symbol;Acc:HGNC:4038]	6375	0.006133776158094406	0.23744702	No	
+row_18	AXIN1	axin 1 [Source:HGNC Symbol;Acc:HGNC:903]	6527	0.005531820002943277	0.23604813	No	
+row_19	WNT1	Wnt family member 1 [Source:HGNC Symbol;Acc:HGNC:12774]	8243	7.392605766654015E-4	0.15540066	No	
+row_20	NKD1	NKD inhibitor of WNT signaling pathway 1 [Source:HGNC Symbol;Acc:HGNC:17045]	8539	4.0050363168120384E-4	0.14181344	No	
+row_21	WNT6	Wnt family member 6 [Source:HGNC Symbol;Acc:HGNC:12785]	8664	2.838643849827349E-4	0.1362227	No	
+row_22	DKK4	dickkopf WNT signaling pathway inhibitor 4 [Source:HGNC Symbol;Acc:HGNC:2894]	11152	-0.0011958685936406255	0.019401258	No	
+row_23	DKK1	dickkopf WNT signaling pathway inhibitor 1 [Source:HGNC Symbol;Acc:HGNC:2891]	12597	-0.002804473740980029	-0.04622663	No	
+row_24	FRAT1	FRAT regulator of WNT signaling pathway 1 [Source:HGNC Symbol;Acc:HGNC:3944]	13531	-0.004249245394021273	-0.08608821	No	
+row_25	LEF1	lymphoid enhancer binding factor 1 [Source:HGNC Symbol;Acc:HGNC:6551]	14400	-0.005991202313452959	-0.12104707	No	
+row_26	FZD8	frizzled class receptor 8 [Source:HGNC Symbol;Acc:HGNC:4046]	14999	-0.007546582259237766	-0.14156559	No	
+row_27	NUMB	NUMB endocytic adaptor protein [Source:HGNC Symbol;Acc:HGNC:8060]	15979	-0.010457558557391167	-0.17713565	No	
+row_28	HEY2	hes related family bHLH transcription factor with YRPW motif 2 [Source:HGNC Symbol;Acc:HGNC:4881]	16467	-0.012181444093585014	-0.1875503	No	
+row_29	PPARD	peroxisome proliferator activated receptor delta [Source:HGNC Symbol;Acc:HGNC:9235]	16531	-0.012443332932889462	-0.17756267	No	
+row_30	GNAI1	G protein subunit alpha i1 [Source:HGNC Symbol;Acc:HGNC:4384]	16573	-0.012597308494150639	-0.16637	No	
+row_31	DLL1	delta like canonical Notch ligand 1 [Source:HGNC Symbol;Acc:HGNC:2908]	18209	-0.020924219861626625	-0.22216642	No	
+row_32	AXIN2	axin 2 [Source:HGNC Symbol;Acc:HGNC:904]	18384	-0.0222347192466259	-0.20723593	No	
+row_33	JAG2	jagged canonical Notch ligand 2 [Source:HGNC Symbol;Acc:HGNC:6189]	18388	-0.022256826981902122	-0.18416426	No	
+row_34	CCND2	cyclin D2 [Source:HGNC Symbol;Acc:HGNC:1583]	18548	-0.02341378480195999	-0.16729188	No	
+row_35	JAG1	jagged canonical Notch ligand 1 [Source:HGNC Symbol;Acc:HGNC:6188]	19462	-0.031756170094013214	-0.17751397	No	
+row_36	NOTCH4	notch receptor 4 [Source:HGNC Symbol;Acc:HGNC:7884]	19623	-0.03361818566918373	-0.15004577	No	
+row_37	HEY1	hes related family bHLH transcription factor with YRPW motif 1 [Source:HGNC Symbol;Acc:HGNC:4880]	19629	-0.03369448333978653	-0.11513946	No	
+row_38	NOTCH1	notch receptor 1 [Source:HGNC Symbol;Acc:HGNC:7881]	19631	-0.03373090922832489	-0.080005266	No	
+row_39	WNT5B	Wnt family member 5B [Source:HGNC Symbol;Acc:HGNC:16265]	20113	-0.04194203019142151	-0.05909449	No	
+row_40	KAT2A	lysine acetyltransferase 2A [Source:HGNC Symbol;Acc:HGNC:4201]	20372	-0.049078844487667084	-0.020153157	No	
+row_41	MYC	MYC proto-oncogene, bHLH transcription factor [Source:HGNC Symbol;Acc:HGNC:7553]	20466	-0.052640292793512344	0.030336073	No	

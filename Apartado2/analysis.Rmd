@@ -1,0 +1,193 @@
+---
+title: "Analysis"
+author: "Tamara Said"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Cargar paquetes necesarias     
+Se cargan las paquetes necesarias para realizar análisis de expresión diferencial y visualización de datos. Estas bibliotecas incluyen DESeq2 para análisis estadístico, ggplot2 y pheatmap para gráficos y mapas de calor, y otras herramientas útiles para manipular y representar datos.    
+```{r echo=FALSE}
+library("DESeq2")         # Para análisis de expresión diferencial
+library("ggplot2")        # Para visualización de datos
+library("ggplotify")      # Para integrar gráficos ggplot2 en otros formatos
+library("tidyverse")      # Para manipulación de datos
+library("pheatmap")       # Para generar mapas de calor
+library("RColorBrewer")   # Para generar paletas de colores
+```
+
+### Cargar Data     
+Se cargan los datos necesarios para el análisis. Esto incluye metadatos que describen las características de la muestra y los recuentos sin procesar obtenidos de la secuenciación de ARN.   
+```{r}
+# Cargar metadata
+metadata <- read.csv(file = "input/metadata.tsv", sep = "\t")
+
+# Cargar raw counts
+raw_counts <- read.csv(file = "input/rawcounts.tsv", sep = "\t", row.names = 1)
+
+```
+
+
+#### Modificaccion de datos      
+La preparación de los datos se realiza antes de realizar el análisis. Se ajustan los nombres de filas y columnas, las variables relevantes se convierten en factores y se crea un nuevo 'grupo' de variables para la interacción entre las condiciones de tratamiento y el tiempo.     
+```{r}
+# Establecer los nombres de fila como los nombres de columna de los raw counts
+rownames(metadata) <- colnames(raw_counts)
+
+# Convertir las variables pertinentes en factores
+metadata <- mutate(.data = metadata, 
+                   X = NULL,  # Eliminar columna no deseada
+                   patient = as.factor(patient),
+                   agent = as.factor(agent),
+                   time = as.factor(time))
+
+# Comprobar si los nombres de columna coinciden con los de fila
+identical(colnames(raw_counts), rownames(metadata))
+
+# Crear una nueva columna 'group' para la interacción entre 'agent' y 'time'
+metadata$group <- as.factor(interaction(metadata$agent, metadata$time, sep = ""))
+
+```
+
+### Análisis de expresión diferencial     
+El análisis de expresión diferencial se realiza utilizando el paquete DESeq2. Esto implica crear un conjunto de datos DESeq2, filtrar genes con baja expresión y ajustar un modelo de regresión lineal generalizado para cada gen.    
+```{r}
+# Crear un conjunto de datos de DESeq2
+dds <- DESeqDataSetFromMatrix(countData = raw_counts,
+                              colData = metadata,
+                              design = ~ patient + group)
+
+# Filtrar genes con menos de 10 recuentos
+keep <- rowSums(counts(dds)) >= 10
+dds2 <- dds[keep, ]
+
+# Ajuste del modelo GLM: Estadística de Wald
+dds3 <- DESeq(dds2, test = "Wald")
+summary(dds3)
+```
+
+El test de Wald es una prueba de hipótesis que se realiza comúnmente en parámetros que han sido estimados por máxima verosimilitud (ML). La estimación de máxima verosimilitud (MLE) es un método de estimación que nos permite utilizar una muestra para estimar los parámetros de la distribución de probabilidad que generó la muestra.
+
+### Variance-stabilizing transformation por DESeq y mapa de calor   
+VST normaliza los datos de recuentos estabilizando su varianza utilizando factores de tamaño. La matriz resultante es aproximadamente homocedástica, lo que significa que la varianza es relativamente constante en todos los puntos de datos. Además, considera el tamaño de la paquete durante el proceso de normalización.
+
+```{r}
+vst_m <- vst(dds3)
+```
+
+#### Mapa de calor     
+`pheatmap` se utiliza para generar mapas de calor agrupados, ofreciendo un control mejorado sobre varios parámetros gráficos como el tamaño de la celda y otros.    
+
+```{r}
+# Calcular distancias de muestra
+sampleDists <- dist(t(assay(vst_m)))
+
+# Convertir objeto de distancia en matriz
+sampleDistMatrix <- as.matrix(sampleDists)
+
+# Asignar nombres de filas según el paciente y el grupo
+rownames(sampleDistMatrix) <- paste(vst_m$patient, vst_m$group, sep = " - ")
+
+# Borrar nombres de columnas
+colnames(sampleDistMatrix) <- NULL
+
+# Definir colores para el mapa de calor
+colors <- colorRampPalette(rev(brewer.pal(9, "Reds")))(255)
+
+# Dibujar mapa de calor agrupado
+pheatmap(sampleDistMatrix,
+         clustering_distance_rows = sampleDists,
+         clustering_distance_cols = sampleDists,
+         col = colors)
+```
+
+
+### Análisis de expresión diferencial para tratamientos con OHT y DPN después de 24h     
+Los análisis de expresión diferencial se realizan por separado para los tratamientos OHT y DPN después de 24 horas. Esto nos permite identificar genes que se expresan diferencialmente entre los grupos de tratamiento y control en cada tratamiento.    
+```{r}
+# Resultados para DPN
+res_DPN <- results(object = dds3,
+                   contrast = c("group", "Control24h", "DPN24h"),
+                   alpha = 0.05,
+                   pAdjustMethod = "BH")
+
+summary(res_DPN)
+
+# Resultados para OHT
+res_OHT <- results(object = dds3,
+                   contrast = c("group", "Control24h", "OHT24h"),
+                   alpha = 0.05,
+                   pAdjustMethod = "BH")
+
+summary(res_OHT)
+```
+
+#### Mapa de color por visualicacion 
+```{r}
+# Extraiga las 30 filas superiores de la matriz de datos de expresión transformada para la condición DPN
+DPN_matrix <- assay(vst_m)[head(order(res_DPN$padj), 30), ]
+
+# Restar los medios de fila de la matriz de expresión DPN para centrar los datos
+DPN_matrix <- DPN_matrix - rowMeans(DPN_matrix)
+
+# Extraiga las 30 filas superiores de la matriz de datos de expresión transformada para la condición OHT
+OHT_matrix <- assay(vst_m)[head(order(res_DPN$padj), 30), ]
+
+# Restar los medios de fila de la matriz de expresión OHT para centrar los datos
+OHT_matrix <- OHT_matrix - rowMeans(OHT_matrix)
+
+# Extraiga columnas de metadatos de paciente, agente y tiempo y guárdelas 
+annotat <- as.data.frame(colData(vst_m)[ , c("patient", "agent", "time")])
+
+# Definir colores para las columnas de anotaciones
+colors <- list(
+    patient = c("1" = "green", "2" = "red", "3" = "blue", "4" = "white"),
+    agent = c(Control = "black", DPN = "purple", OHT = "yellow"),
+    time = c("24h" = "orange", "48h" = "pink")
+)
+
+# Crear mapa de calor para la condición DPN con columnas anotadas y colores especificados
+pheatmap(mat = DPN_matrix, annotation_col = annotat, show_colnames = FALSE, 
+         annotation_colors = colors, main = "DPN Matrix")
+
+# Crear mapa de calor para la condición OHT con columnas anotadas y colores especificados
+pheatmap(mat = OHT_matrix, annotation_col = annotat, show_colnames = FALSE, 
+         annotation_colors = colors, main = "OHT Matrix")
+
+```
+
+
+### Guardar análisis de expresión diferencial     
+Los resultados del análisis de expresión diferencial se guardan en un archivo para su posterior referencia y análisis.   
+```{r}
+saveRDS(object = dds3, file = "input/dds3.rds")
+```
+
+### Crear archivo de rank para análisis GSEA     
+Se crea un archivo de clasificación que contiene los genes clasificados según su cambio de expresión entre el grupo tratado con DPN y el grupo de control después de 24 horas. Este archivo se utiliza para realizar análisis de enriquecimiento genético (GSEA) para identificar vías biológicas asociadas con cambios en la expresión genética.
+```{r}
+# Resultados para DPN para GSEA
+res <- results(dds3, alpha = 0.05, contrast = c("group", "DPN24h", "Control24h"))
+summary(res)
+
+# Ajustar el LFC para GSEA
+res.ape <- lfcShrink(dds = dds3, coef = "group_DPN24h_vs_Control24h", type = "apeglm",
+                     res = res)
+summary(res.ape)
+
+# Crear archivo de rango para GSEA
+rnk <- data.frame(Feature = rownames(res.ape), LFC = res.ape$log2FoldChange)
+write.table(rnk, file = "input/ranked_DNP_24h.rnk", sep = "\t", quote = FALSE,  col.names = FALSE, row.names = FALSE)
+
+```
+
+
+
+
+
+
+
